@@ -6,5 +6,4 @@ Scripts:
 
 1. create item as child
 1. check item
-1. mark all items due today
 1. archive all checked items

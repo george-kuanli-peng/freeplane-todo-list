@@ -1,6 +1,7 @@
 // @ExecutionModes({ON_SINGLE_NODE})
 // prompt from gist by [wytten](https://gist.github.com/wytten/5213495)
 
+import java.text.SimpleDateFormat
 import javax.swing.*
 
 def prompt = {
@@ -19,6 +20,17 @@ def getArchiveNodePos = {
     }
 }
 
+def tryParseDate = {
+    List<String> formatStrs = Arrays.asList("y-M-d H:m", "y/M/d H:m", "y-M-d", "y/M/d")
+    for (fmt in formatStrs) {
+        try {
+            return new SimpleDateFormat(fmt).parse(it)
+        } catch (e) {
+        }
+    }
+    return null
+}
+
 def itemText = prompt("Enter text for item:")
 if (!itemText) return
 
@@ -30,7 +42,10 @@ if (archivePos >= 0) {
     itemNode.moveTo(itemNode.getParent(), archivePos)
 }
 
-def dueDate = prompt("Enter due date (leave blank if no due date):")
-if (dueDate) {
-    itemNode.putAt("due_date", dueDate)
+def reminderDate = prompt("Enter reminder date (leave blank if to skip):\n\n" +
+                     "Examples:\n" +
+                     "2021/5/18\n2021/5/18 17:30\n2021-5-18\n2021-5-18 17:30")
+if (reminderDate) reminderDate = tryParseDate(reminderDate)
+if (reminderDate) {
+    itemNode.reminder.createOrReplace(reminderDate, "HOUR", 1)
 }
