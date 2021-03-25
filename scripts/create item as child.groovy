@@ -1,9 +1,9 @@
 // @ExecutionModes({ON_SINGLE_NODE})
-// prompt from gist by [wytten](https://gist.github.com/wytten/5213495)
 
 import java.text.SimpleDateFormat
 import javax.swing.*
 
+// from gist by [wytten](https://gist.github.com/wytten/5213495)
 def prompt = {
     JFrame jframe = new JFrame()
     String answer = JOptionPane.showInputDialog(jframe, it)
@@ -20,6 +20,7 @@ def getArchiveNodePos = {
     }
 }
 
+// from example by [Matt Ball](https://stackoverflow.com/questions/4024544/how-to-parse-dates-in-multiple-formats-using-simpledateformat)
 def tryParseDate = {
     List<String> formatStrs = Arrays.asList("y-M-d H:m", "y/M/d H:m", "y-M-d", "y/M/d")
     for (fmt in formatStrs) {
